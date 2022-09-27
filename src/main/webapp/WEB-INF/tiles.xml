@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE tiles-definitions PUBLIC  
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"  
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">  
+        
+<tiles-definitions>  
+ 
+    <!-- Base Define -->
+    <definition name="base.definition" 
+        template="/WEB-INF/layouts/layout.jsp">  
+        <put-attribute name="title" value="" />  
+        <put-attribute name="header" value="/WEB-INF/basefragments/_header.jsp" />  
+        <put-attribute name="body" value="" />  
+        <put-attribute name="footer" value="/WEB-INF/basefragments/_footer.jsp" />  
+    </definition>  
+ 
+ 	<!-- Home Page  -->
+    <definition name="home" extends="base.definition">  
+        <put-attribute name="title" value="Home" />  
+        <put-attribute name="body" value="/WEB-INF/bodyfragments/_home.jsp" />  
+    </definition>    
+ 
+    <!-- Home Page  -->
+    <definition name="welcome" extends="base.definition">  
+        <put-attribute name="title" value="Welcome" />  
+        <put-attribute name="body" value="/WEB-INF/bodyfragments/_welcome.jsp" />  
+    </definition> 
+    
+     <definition name="login" extends="base.definition">  
+        <put-attribute name="title" value="Login" />  
+        <put-attribute name="body" value="/WEB-INF/bodyfragments/_login.jsp" />  
+    </definition>
+    
+    <definition name="signUp" extends="base.definition">  
+        <put-attribute name="title" value="User Registration" />  
+        <put-attribute name="body" value="/WEB-INF/bodyfragments/_signUp.jsp" />  
+    </definition>
+    
+    
+     <definition name="user-signUp" extends="base.definition">  
+        <put-attribute name="title" value="User Registration" />  
+        <put-attribute name="body" value="/WEB-INF/bodyfragments/_userRegister.jsp" />  
+    </definition>
+    
+    <definition name="doctor-signUp" extends="base.definition">  
+        <put-attribute name="title" value="User Registration" />  
+        <put-attribute name="body" value="/WEB-INF/bodyfragments/_doctorRegister.jsp" />  
+    </definition>
+    
+    <definition name="shopkeeper-signUp" extends="base.definition">  
+        <put-attribute name="title" value="User Registration" />  
+        <put-attribute name="body" value="/WEB-INF/bodyfragments/_shopkeeperRegister.jsp" />  
+    </definition>
+    
+    <definition name="schedule-appointment" extends="base.definition">  
+        <put-attribute name="title" value="Schedule Appointment" />  
+        <put-attribute name="body" value="/WEB-INF/bodyfragments/_scheduleAppointment.jsp" />  
+    </definition>
+    
+    
+       <definition name="aboutUs" extends="base.definition">  
+        <put-attribute name="title" value="About Us" />  
+        <put-attribute name="body" value="/WEB-INF/bodyfragments/_aboutUs.jsp" />  
+    </definition>
+    
+    <definition name="contactUs" extends="base.definition">  
+        <put-attribute name="title" value="Contact Us" />  
+        <put-attribute name="body" value="/WEB-INF/bodyfragments/_contactUs.jsp" />  
+    </definition>
+    
+     <definition name="medicine" extends="base.definition">  
+        <put-attribute name="title" value="Add Medicine" />  
+        <put-attribute name="body" value="/WEB-INF/bodyfragments/_medicine.jsp" />  
+    </definition>
+    
+    <definition name="medicineList" extends="base.definition">  
+        <put-attribute name="title" value="Medicine List" />  
+        <put-attribute name="body" value="/WEB-INF/bodyfragments/_medicineList.jsp" />  
+    </definition>
+    
+       <definition name="userList" extends="base.definition">  
+        <put-attribute name="title" value="User List" />  
+        <put-attribute name="body" value="/WEB-INF/bodyfragments/_userList.jsp" />  
+    </definition>
+    
+     <definition name="scheduleSlot" extends="base.definition">  
+        <put-attribute name="title" value="Add Slot" />  
+        <put-attribute name="body" value="/WEB-INF/bodyfragments/_scheduleSlot.jsp" />  
+    </definition>
+    
+     <definition name="scheduleSlotList" extends="base.definition">  
+        <put-attribute name="title" value="Slot List" />  
+        <put-attribute name="body" value="/WEB-INF/bodyfragments/_scheduleSlotList.jsp" />  
+    </definition>
+    
+    <definition name="appointment" extends="base.definition">  
+        <put-attribute name="title" value="Make Appointment" />  
+        <put-attribute name="body" value="/WEB-INF/bodyfragments/_appointment.jsp" />  
+    </definition>
+    
+     <definition name="appointmentList" extends="base.definition">  
+        <put-attribute name="title" value="Appointment List" />  
+        <put-attribute name="body" value="/WEB-INF/bodyfragments/_appointmentList.jsp" />  
+    </definition>
+    
+     <definition name="updatePrescription" extends="base.definition">  
+        <put-attribute name="title" value="Update Prescription" />  
+        <put-attribute name="body" value="/WEB-INF/bodyfragments/_updatePrescription.jsp" />  
+    </definition>
+    
+     <definition name="quickAccessList" extends="base.definition">  
+        <put-attribute name="title" value="Quick Access" />  
+        <put-attribute name="body" value="/WEB-INF/bodyfragments/_quickAccessSearch.jsp" />  
+    </definition>
+    
+    
+      <definition name="profile" extends="base.definition">  
+        <put-attribute name="title" value="My Profile" />  
+        <put-attribute name="body" value="/WEB-INF/bodyfragments/_myProfile.jsp" />  
+    </definition>
+    
+    
+    
+     <definition name="patient-profile" extends="base.definition">  
+        <put-attribute name="title" value="My Profile" />  
+        <put-attribute name="body" value="/WEB-INF/bodyfragments/_myProfile.jsp" />  
+    </definition>
+    
+     <definition name="admin-profile" extends="base.definition">  
+        <put-attribute name="title" value="Admin Profile" />  
+        <put-attribute name="body" value="/WEB-INF/bodyfragments/_adminProfile.jsp" />  
+    </definition>
+    
+    <definition name="doctor-profile" extends="base.definition">  
+        <put-attribute name="title" value="My Profile" />  
+        <put-attribute name="body" value="/WEB-INF/bodyfragments/_doctorProfile.jsp" />  
+    </definition>
+    
+    <definition name="shopkeeper-profile" extends="base.definition">  
+        <put-attribute name="title" value="My Profile" />  
+        <put-attribute name="body" value="/WEB-INF/bodyfragments/_shopkeeperProfile.jsp" />  
+    </definition>
+    
+     <definition name="changePassword" extends="base.definition">  
+        <put-attribute name="title" value="Change Password" />  
+        <put-attribute name="body" value="/WEB-INF/bodyfragments/_changePassword.jsp" />  
+    </definition>
+    
+     <definition name="forgetPassword" extends="base.definition">  
+        <put-attribute name="title" value="Forget Password" />  
+        <put-attribute name="body" value="/WEB-INF/bodyfragments/_forgetPassword.jsp" />  
+    </definition>
+   
+</tiles-definitions> 
