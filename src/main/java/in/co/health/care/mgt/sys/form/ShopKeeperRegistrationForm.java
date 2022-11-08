@@ -40,6 +40,8 @@ public class ShopKeeperRegistrationForm extends BaseForm {
 		shop.setEducation(education);
 		shop.setShopName(shopName);
 		shop.setShopNo(shopNo);
+		
+		shop.setLicenceNo(licenceNo);
 
 		shop.setStreet(shopStreet);
 		shop.setShopcity(shopcity);
@@ -66,7 +68,7 @@ public class ShopKeeperRegistrationForm extends BaseForm {
 		shopName = entity.getShopName();
 		shopNo = entity.getShopNo();
 		shopStreet = entity.getStreet();
-
+		licenceNo=entity.getLicenceNo();
 		createdBy = entity.getCreatedBy();
 		modifiedBy = entity.getModifiedBy();
 		createdDateTime = entity.getCreatedDatetime();
