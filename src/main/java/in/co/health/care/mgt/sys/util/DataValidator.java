@@ -85,6 +85,20 @@ public class DataValidator {
 			return false;
 		}
 	}
+	
+	public static boolean isLDouble(String val) {
+		if (isNotNull(val)) {
+			try {
+				double i = Double.parseDouble(val);
+				return true;
+			} catch (NumberFormatException e) {
+				return false;
+			}
+
+		} else {
+			return false;
+		}
+	}
 
 	/*public static boolean isIntegerName(String val) {
 		String match = "^[0-9]{3}$";
