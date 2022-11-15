@@ -22,7 +22,7 @@
 		modelAttribute="form" enctype="multipart/form-data">
 		<div class="card">
 			<h5 class="card-header"
-				style="background-color: rgb(13 110 253/ 25%); color: black;">My
+				style="background-color: #803c37; color: white; font-style: oblique;">My
 				Profile</h5> 
 			<div class="card-body">
 				<b><%@ include file="businessMessage.jsp"%></b>
@@ -32,7 +32,7 @@
 					<div class="row">
 						<div class="col-md-4">
 							<s:bind path="firstName">
-								<label for="inputEmail4" class="form-label">First Name</label>
+								<label for="inputEmail4" class="form-label">First Name<font color="red">*</font></label>
 								<sf:input path="${status.expression}"
 									placeholder="Enter First Name here..." class="form-control" />
 								<font color="red" style="font-size: 13px"><sf:errors
@@ -42,7 +42,7 @@
 
 						<div class="col-md-4">
 							<s:bind path="middleName">
-								<label for="inputEmail4" class="form-label">Middle Name</label>
+								<label for="inputEmail4" class="form-label">Middle Name<font color="red">*</font></label>
 								<sf:input path="${status.expression}"
 									placeholder="Enter Middle Name here..." class="form-control" />
 								<font color="red" style="font-size: 13px"><sf:errors
@@ -53,7 +53,7 @@
 
 						<div class="col-md-4">
 							<s:bind path="lastName">
-								<label for="inputEmail4" class="form-label">Last Name</label>
+								<label for="inputEmail4" class="form-label">Last Name<font color="red">*</font></label>
 								<sf:input path="${status.expression}"
 									placeholder="Enter Last Name here..." class="form-control" />
 								<font color="red" style="font-size: 13px"><sf:errors
@@ -67,7 +67,7 @@
 					<div class="row">
 						<div class="col-md-6">
 							<s:bind path="userName">
-								<label for="inputEmail4" class="form-label">User Name</label>
+								<label for="inputEmail4" class="form-label">User Name<font color="red">*</font></label>
 								<sf:input path="${status.expression}"
 									placeholder="Enter User Name here..." class="form-control" />
 								<font color="red" style="font-size: 13px"><sf:errors
@@ -77,7 +77,7 @@
 
 						<div class="col-md-6">
 							<s:bind path="password">
-								<label for="inputEmail4" class="form-label">Password</label>
+								<label for="inputEmail4" class="form-label">Password<font color="red">*</font></label>
 								<sf:input type="password" path="${status.expression}"
 									placeholder="Enter Password here..." class="form-control" />
 								<font color="red" style="font-size: 13px"><sf:errors
@@ -92,7 +92,7 @@
 					<div class="row">
 						<div class="col-md-6">
 							<s:bind path="email">
-								<label for="inputEmail4" class="form-label">Email</label>
+								<label for="inputEmail4" class="form-label">Email<font color="red">*</font></label>
 								<sf:input path="${status.expression}"
 									placeholder="Enter Email here..." class="form-control" />
 								<font color="red" style="font-size: 13px"><sf:errors
@@ -102,7 +102,7 @@
 
 						<div class="col-md-4">
 							<s:bind path="phoneNo">
-								<label for="inputEmail4" class="form-label">Phone No</label>
+								<label for="inputEmail4" class="form-label">Phone No<font color="red">*</font></label>
 								<sf:input path="${status.expression}"
 									placeholder="Enter Phone No" class="form-control" />
 								<font color="red" style="font-size: 13px"><sf:errors
@@ -117,7 +117,7 @@
 
 						<div class="col-md-4">
 							<s:bind path="shopName">
-								<label for="inputEmail4" class="form-label">Shop Name</label>
+								<label for="inputEmail4" class="form-label">Shop Name<font color="red">*</font></label>
 								<sf:input path="${status.expression}"
 									placeholder="Enter Shop Name" class="form-control" />
 								<font color="red" style="font-size: 13px"><sf:errors
@@ -128,7 +128,7 @@
 
 						<div class="col-md-4">
 							<s:bind path="shopNo">
-								<label for="inputEmail4" class="form-label">Shop No</label>
+								<label for="inputEmail4" class="form-label">Shop No<font color="red">*</font></label>
 								<sf:input path="${status.expression}"
 									placeholder="Enter Shop No " class="form-control" />
 								<font color="red" style="font-size: 13px"><sf:errors
@@ -138,7 +138,7 @@
 
 						<div class="col-md-4">
 							<s:bind path="licenceNo">
-								<label for="inputEmail4" class="form-label">License No</label>
+								<label for="inputEmail4" class="form-label">License No<font color="red">*</font></label>
 								<sf:input path="${status.expression}"
 									placeholder="Enter License No " class="form-control" />
 								<font color="red" style="font-size: 13px"><sf:errors
@@ -157,7 +157,7 @@
 						<div class="col-md-4">
 							<s:bind path="contactNo">
 								<label for="inputEmail4" class="form-label">Shop Contact
-									No</label>
+									No<font color="red">*</font></label>
 								<sf:input path="${status.expression}"
 									placeholder="Enter Shop Contact No" class="form-control" />
 								<font color="red" style="font-size: 13px"><sf:errors
@@ -168,7 +168,7 @@
 
 						<div class="col-md-4">
 							<s:bind path="education">
-								<label for="inputEmail4" class="form-label">Education</label>
+								<label for="inputEmail4" class="form-label">Education<font color="red">*</font></label>
 								<sf:input path="${status.expression}"
 									placeholder="Enter Education " class="form-control" />
 								<font color="red" style="font-size: 13px"><sf:errors
@@ -183,7 +183,7 @@
 					<div class="row">
 						<div class="col-md-4">
 							<s:bind path="shopStreet">
-								<label for="inputEmail4" class="form-label">Shop Street</label>
+								<label for="inputEmail4" class="form-label">Shop Street<font color="red">*</font></label>
 								<sf:input path="${status.expression}"
 									placeholder="Enter ShopStreet here..." class="form-control" />
 								<font color="red" style="font-size: 13px"><sf:errors
@@ -193,7 +193,7 @@
 
 						<div class="col-md-4">
 							<s:bind path="shopcity">
-								<label for="inputEmail4" class="form-label">Shop city</label>
+								<label for="inputEmail4" class="form-label">Shop city<font color="red">*</font></label>
 								<sf:input path="${status.expression}"
 									placeholder="Enter Shop city here..." class="form-control" />
 								<font color="red" style="font-size: 13px"><sf:errors
@@ -203,7 +203,7 @@
 
 						<div class="col-md-4">
 							<s:bind path="shopCountry">
-								<label for="inputEmail4" class="form-label">Shop Country</label>
+								<label for="inputEmail4" class="form-label">Shop Country<font color="red">*</font></label>
 								<sf:input path="${status.expression}"
 									placeholder="Enter Shop Country here..." class="form-control" />
 								<font color="red" style="font-size: 13px"><sf:errors
@@ -224,7 +224,7 @@
 					<div class="row">
 						<div class="col-md-6">
 							<s:bind path="shopAddress">
-								<label for="inputEmail4" class="form-label">Shop Address</label>
+								<label for="inputEmail4" class="form-label">Shop Address<font color="red">*</font></label>
 								<sf:textarea path="${status.expression}"
 									placeholder="Enter Shop Address here..." rows="4" cols="4"
 									class="form-control" />
@@ -249,7 +249,7 @@
 						<div class="col-md-6">
 							<s:bind path="profilePic">
 								<label for="inputEmail4" class="form-label">Profile
-									Picture</label>
+									Picture<font color="red">*</font></label>
 								<sf:input type="file" path="${status.expression}"
 									placeholder="Upload Profile Picture" class="form-control"
 									required="required" />
