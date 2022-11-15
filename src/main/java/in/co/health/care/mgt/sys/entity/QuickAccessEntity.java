@@ -19,5 +19,8 @@ public class QuickAccessEntity extends BaseEntity {
 	private String key;
 	@Column(name = "description", length = 2000)
 	private String description;
+	
+	private long toScale;
+	private long fromScale;
 
 }

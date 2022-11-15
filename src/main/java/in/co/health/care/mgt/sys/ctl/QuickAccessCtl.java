@@ -33,6 +33,7 @@ import in.co.health.care.mgt.sys.exception.DuplicateRecordException;
 import in.co.health.care.mgt.sys.form.QuickAccessForm;
 import in.co.health.care.mgt.sys.service.QuickAccessService;
 import in.co.health.care.mgt.sys.util.ControllerUtility;
+import in.co.health.care.mgt.sys.util.DataUtility;
 
 @Controller
 @RequestMapping("/quickAccess")
@@ -64,6 +65,15 @@ public class QuickAccessCtl extends BaseCtl {
 		}
 		log.info("QuickAccessCtl display method End");
 		return "quickAccess";
+	}
+	
+	@GetMapping("/page1")
+	public String page1(@ModelAttribute("form") QuickAccessForm form,
+			HttpSession session, Model model) {
+		log.info("QuickAccessCtl login display method start");
+		
+		log.info("QuickAccessCtl display method End");
+		return "page1";
 	}
 
 	@PostMapping
@@ -152,6 +162,14 @@ public class QuickAccessCtl extends BaseCtl {
 				model.addAttribute("list", null);
 			}
 			
+			long days=DataUtility.getLong(form.getDays());
+			long scale=DataUtility.getLong(form.getScale());
+			
+			if(scale>7) {
+				ControllerUtility.setErrorMessage("Please consult a doctor", model);
+			} else if(scale < 5 && days>5){
+				ControllerUtility.setErrorMessage("Please consult a doctor", model);
+			}
 			
 			
 

@@ -6,9 +6,14 @@ import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+import java.util.UUID;
+
+import org.springframework.scheduling.annotation.Scheduled;
 
 public class DataUtility {
 
@@ -50,6 +55,14 @@ public class DataUtility {
 			return Long.parseLong(val);
 		} else {
 			return 0;
+		}
+	}
+	
+	public static double getDouble(String val) {
+		if (DataValidator.isLDouble(val)) {
+			return Double.parseDouble(val);
+		} else {
+			return 0.0;
 		}
 	}
 
@@ -202,10 +215,9 @@ public class DataUtility {
 	}
 
 	public static void main(String[] args) {
-		DataUtility d = new DataUtility();
-		Date date = new Date();
-
-		System.out.println(generatePassword());
+		
 	}
+
+	
 
 }
