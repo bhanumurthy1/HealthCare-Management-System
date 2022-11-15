@@ -22,7 +22,7 @@
 		modelAttribute="form" enctype="multipart/form-data">
 		<div class="card" style="width: 900px">
 			<h5 class="card-header"
-				style="background-color: rgb(13 110 253/ 25%); color: black;">Medicine</h5>
+				style="background-color: #803c37; color: white; font-style: oblique;">Medicine</h5>
 			<div class="card-body">
 				<b><%@ include file="businessMessage.jsp"%></b>
 
@@ -32,7 +32,7 @@
 					<div class="row">
 						<div class="col-md-6">
 							<s:bind path="name">
-								<label for="inputEmail4" class="form-label">Name</label>
+								<label for="inputEmail4" class="form-label">Name<font color="red">*</font></label>
 								<sf:input type="passsword" path="${status.expression}"
 									placeholder="Enter Name here..." class="form-control" />
 								<font color="red" style="font-size: 13px"><sf:errors
@@ -42,7 +42,7 @@
 
 						<div class="col-md-6">
 							<s:bind path="companyName">
-								<label for="inputEmail4" class="form-label">CompanyName</label>
+								<label for="inputEmail4" class="form-label">CompanyName<font color="red">*</font></label>
 								<sf:input path="${status.expression}"
 									placeholder="Enter CompanyName here..." class="form-control" />
 								<font color="red" style="font-size: 13px"><sf:errors
@@ -54,11 +54,31 @@
 
 				<div class="mb-3">
 					<div class="row">
+					
+					<div class="col-md-4">
+							<s:bind path="price">
+								<label for="inputEmail4" class="form-label">Price<font color="red">*</font></label>
+								<sf:input  path="${status.expression}"
+									placeholder="Enter Price here..." class="form-control" />
+								<font color="red" style="font-size: 13px"><sf:errors
+										path="${status.expression}" /></font>
+							</s:bind>
+						</div>
 						<div class="col-md-4">
 							<s:bind path="quantity">
-								<label for="inputEmail4" class="form-label">Quantity</label>
+								<label for="inputEmail4" class="form-label">Quantity<font color="red">*</font></label>
 								<sf:input  path="${status.expression}"
 									placeholder="Enter Quantity here..." class="form-control" />
+								<font color="red" style="font-size: 13px"><sf:errors
+										path="${status.expression}" /></font>
+							</s:bind>
+						</div>
+						
+						<div class="col-md-4">
+							<s:bind path="rating">
+								<label for="inputEmail4" class="form-label">Rating<font color="red">*</font></label>
+								<sf:input  path="${status.expression}"
+									placeholder="Enter Rating here..." class="form-control" />
 								<font color="red" style="font-size: 13px"><sf:errors
 										path="${status.expression}" /></font>
 							</s:bind>
@@ -66,7 +86,7 @@
 
 						<div class="col-md-4">
 							<s:bind path="manufactureDate">
-								<label for="inputEmail4" class="form-label">ManufactureDate</label>
+								<label for="inputEmail4" class="form-label">ManufactureDate<font color="red">*</font></label>
 								<sf:input  path="${status.expression}"
 									placeholder="Enter ManufactureDate here..." id="datepicker1" class="form-control" />
 								<font color="red" style="font-size: 13px"><sf:errors
@@ -76,7 +96,7 @@
 
 						<div class="col-md-4">
 							<s:bind path="expiryDate">
-								<label for="inputEmail4" class="form-label">ExpiryDate</label>
+								<label for="inputEmail4" class="form-label">ExpiryDate<font color="red">*</font></label>
 								<sf:input  id="datepicker2" path="${status.expression}"
 									placeholder="Enter ExpiryDate here..." class="form-control" />
 								<font color="red" style="font-size: 13px"><sf:errors
@@ -90,7 +110,7 @@
 					<div class="row">
 						<div class="col-md-6">
 							<s:bind path="description">
-								<label for="inputEmail4" class="form-label">Description</label>
+								<label for="inputEmail4" class="form-label">Description<font color="red">*</font></label>
 								<sf:textarea rows="4" cols="5" type="passsword" path="${status.expression}"
 									placeholder="Enter companyName here..." class="form-control" />
 								<font color="red" style="font-size: 13px"><sf:errors
