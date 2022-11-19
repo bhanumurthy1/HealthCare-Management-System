@@ -30,6 +30,12 @@ public class MedicineForm  extends BaseForm{
 	@NotEmpty(message = "Expiry Date is required")
 	private String expiryDate;
 	
+	@NotEmpty(message = "Price is required")
+	private String price;
+	
+	@NotEmpty(message = "Rating is required")
+	private String rating;
+	
 	private boolean active;
 	private long shoopkeeperId;
 	
@@ -40,7 +46,9 @@ public class MedicineForm  extends BaseForm{
 		entity.setName(name);
 		entity.setDescription(description);
 		entity.setCompanyName(companyName);
+		entity.setPrice(DataUtility.getDouble(price));
 		entity.setQuantity(DataUtility.getInt(quantity));
+		entity.setRating(DataUtility.getInt(rating));
 		entity.setManufactureDate(DataUtility.getDate(manufactureDate));
 		entity.setExpiryDate(DataUtility.getDate(expiryDate));
 		entity.setActive(true);
@@ -59,6 +67,8 @@ public class MedicineForm  extends BaseForm{
 		description=entity.getDescription();
 		companyName=entity.getCompanyName();
 		quantity=String.valueOf(entity.getQuantity());
+		rating=String.valueOf(entity.getRating());
+		price=String.valueOf(entity.getPrice());
 		manufactureDate=DataUtility.getDateString(entity.getManufactureDate());
 		expiryDate=DataUtility.getDateString(entity.getExpiryDate());
 		createdBy = entity.getCreatedBy();
