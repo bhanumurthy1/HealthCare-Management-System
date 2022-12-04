@@ -176,8 +176,18 @@ public class AppointmentServiceImpl implements AppointmentService {
 				if (entity.getId() > 0) {
 					hql.append("and u.id = " + entity.getId());
 				}
+				if (entity.getPatientId() > 0) {
+					hql.append("and u.patientId = " + entity.getPatientId());
+				}
+				if (entity.getDoctorId()> 0) {
+					hql.append("and u.doctorId = " + entity.getDoctorId());
+				}
 				if (entity.getPatientName() != null && entity.getPatientName().length() > 0) {
 					hql.append("and u.patientName like '%" + entity.getPatientName() + "%'");
+				}
+				
+				if (entity.getDoctorName() != null && entity.getDoctorName().length() > 0) {
+					hql.append("and u.doctorName like '%" + entity.getDoctorName() + "%'");
 				}
 
 			}

@@ -1,65 +1,222 @@
+
 <%@taglib uri="http://www.springframework.org/tags" prefix="s"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-	
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main.css" />
-	
-	<noscript>
-		<h2>Sorry! Your browser doesn't support Javascript</h2>
-	</noscript>
+<%@page isELIgnored="false"%>
 
-	<div id="username-page">
-		<div class="username-page-container">
-			<form id="usernameForm" name="usernameForm">
-				
-				<input type="hidden" id="name" value="${sessionScope.user.firstName}">
-				
-				<input type="hidden" id="reciverId" value="${sessionScope.reciverId}">
-				<input type="hidden" id="senderId" value="${sessionScope.senderId}">
-				
-					<button type="submit" class="accent username-submit">Start
-						Chatting</button>
-				
-			</form>
-		</div>
-	</div>
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+<noscript>
+  <h2>Sorry! Your browser doesn't support Javascript</h2>
+</noscript>
 
-	<div id="chat-page" class="hidden">
-		<div class="chat-container">
-			
-			<div class="chat-header" style="background-color: blue;">
-			<c:if test="${sessionScope.user.role.id == 2}">
-				<h5 style="color: white;">${sessionScope.pName}</h5>
-				</c:if>
-				<c:if test="${sessionScope.user.role.id == 4}">
-				<h5 style="color: white;">${sessionScope.docName}</h5>
-				</c:if>
-				
-					<form id="disconnectForm" name="messageForm" nameForm="messageForm">
-					<button type="submit" class="primary">Close</button>
-					</form>
-				
-			</div>
-			<div class="connecting">Connecting...</div>
-			<ul id="messageArea">
+<div id="username-page">
+  <div class="username-page-container rounded-3xl shadow-xl">
+    <h1 class="title">Enter a username and room ID</h1>
+    <form id="usernameForm" name="usernameForm">
+      <div class="form-group">
+        <input type="hidden" id="name" placeholder="Username" value="${sessionScope.user.firstName} ${sessionScope.user.lastName}" autocomplete="off" class="form-control" />
+      </div>
+      <div class="form-group">
+      
+        <input type="hidden" id="room-id" value="${sessionScope.chatRoom}" placeholder="Room ID" autocomplete="off" class="form-control" />
+        <input type="hidden" id="show-name" value="${sessionScope.pName}" placeholder="pName" autocomplete="off" class="form-control" />
+      </div>
+      <br>
+      <div class="form-group">
+        <button type="submit" class="accent username-submit block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">Start Chat</button>
+      </div>
+    </form>
+  </div>
+</div>
 
-			</ul>
-			<form id="messageForm" name="messageForm" nameForm="messageForm">
-				<div class="form-group">
-					<div class="input-group clearfix">
-						<input type="text" id="message" placeholder="Type a message..."
-							autocomplete="off" class="form-control" />
-						<button type="submit" class="primary">Send</button>
-					</div>
-				</div>
-			</form>
-		</div>
-		
-		<br>
-	</div>
-	
+<div id="chat-page" class="hidden">
+  <div class="chat-container  rounded-3xl shadow-xl w-full overflow-hidden">
+    <div class="chat-header bg-orange-400 ">
+      <span id="room-id-display"></span>
+      <c:if test="${sessionScope.user.role.id == 2}">
+      <h5>${sessionScope.pName}</h5>
+      </c:if>
+       <c:if test="${sessionScope.user.role.id == 4}">
+      <h5>${sessionScope.docName}</h5>
+      </c:if>
+    </div>
+    <div class="connecting">
+      Connecting...
+    </div>
+    <ul id="messageArea">
 
-	<script
+    </ul>
+    <form id="messageForm" name="messageForm" nameForm="messageForm">
+      <div class="form-group">
+        <div class="input-group clearfix">
+          <input type="text" id="message" placeholder="Type a message... "
+                 autocomplete="off" class="form-control"/>
+          <button type="submit" class="primary">Send</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/3.0.1/js.cookie.min.js"></script>
+<!-- <script src="/js/main.js"></script -->
+
+<script type="text/javascript">
+
+
+var nameInput = $('#name');
+var roomInput = $('#room-id');
+var showName = $('#show-name');
+var usernamePage = document.querySelector('#username-page');
+var chatPage = document.querySelector('#chat-page');
+var usernameForm = document.querySelector('#usernameForm');
+var messageForm = document.querySelector('#messageForm');
+var messageInput = document.querySelector('#message');
+var messageArea = document.querySelector('#messageArea');
+var connectingElement = document.querySelector('.connecting');
+var roomIdDisplay = document.querySelector('#room-id-display');
+
+var stompClient = null;
+var currentSubscription;
+var username = null;
+var roomId = null;
+var topic = null;
+
+var colors = [
+    '#2196F3', '#32c787', '#00BCD4', '#ff5652',
+    '#ffc107', '#ff85af', '#FF9800', '#39bbb0'
+];
+
+function connect(event) {
+  username = nameInput.val().trim();
+  //Cookies.set('name', username);
+  if (username) {
+    usernamePage.classList.add('hidden');
+    chatPage.classList.remove('hidden');
+
+    var socket = new SockJS('/Heath-Care-Management/ws');
+    stompClient = Stomp.over(socket);
+
+    stompClient.connect({}, onConnected, onError);
+  }
+  event.preventDefault();
+}
+
+// Leave the current room and enter a new one.
+function enterRoom(newRoomId) {
+  roomId = newRoomId;
+  //Cookies.set('roomId', roomId);
+  roomIdDisplay.textContent = '';
+
+  topic = '/app/chat/'+newRoomId;
+
+  if (currentSubscription) {
+    currentSubscription.unsubscribe();
+  }
+  var channal=
+  currentSubscription = stompClient.subscribe('/channel/'+roomId, onMessageReceived);
+
+  stompClient.send(topic+'/addUser',
+    {},
+    JSON.stringify({sender: username, type: 'JOIN'})
+  );
+}
+
+function onConnected() {
+  enterRoom(roomInput.val());
+  connectingElement.classList.add('hidden');
+}
+
+function onError(error) {
+  connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
+  connectingElement.style.color = 'red';
+}
+
+function sendMessage(event) {
+  var messageContent = messageInput.value.trim();
+  if (messageContent.startsWith('/join ')) {
+    var newRoomId = messageContent.substring('/join '.length);
+    enterRoom(newRoomId);
+    while (messageArea.firstChild) {
+      messageArea.removeChild(messageArea.firstChild);
+    }
+  } else if (messageContent && stompClient) {
+    var chatMessage = {
+      sender: username,
+      content: messageInput.value,
+      type: 'CHAT'
+    };
+    stompClient.send(topic+'/sendMessage', {}, JSON.stringify(chatMessage));
+  }
+  messageInput.value = '';
+  event.preventDefault();
+}
+
+function onMessageReceived(payload) {
+  var message = JSON.parse(payload.body);
+
+  var messageElement = document.createElement('li');
+
+  if (message.type == 'JOIN') {
+    messageElement.classList.add('event-message');
+    message.content = message.sender + ' joined!';
+  } else if (message.type == 'LEAVE') {
+    messageElement.classList.add('event-message');
+    message.content = message.sender + ' left!';
+  } else {
+    messageElement.classList.add('chat-message');
+
+    var avatarElement = document.createElement('i');
+    var avatarText = document.createTextNode(message.sender[0]);
+    avatarElement.appendChild(avatarText);
+    avatarElement.style['background-color'] = getAvatarColor(message.sender);
+
+    messageElement.appendChild(avatarElement);
+
+    var usernameElement = document.createElement('span');
+    var usernameText = document.createTextNode(message.sender);
+    usernameElement.appendChild(usernameText);
+    messageElement.appendChild(usernameElement);
+  }
+
+  var textElement = document.createElement('p');
+  var messageText = document.createTextNode(message.content);
+  textElement.appendChild(messageText);
+
+  messageElement.appendChild(textElement);
+
+  messageArea.appendChild(messageElement);
+  messageArea.scrollTop = messageArea.scrollHeight;
+}
+
+function getAvatarColor(messageSender) {
+  var hash = 0;
+  for (var i = 0; i < messageSender.length; i++) {
+      hash = 31 * hash + messageSender.charCodeAt(i);
+  }
+  var index = Math.abs(hash % colors.length);
+  return colors[index];
+}
+
+$(document).ready(function() {
+  var savedName = Cookies.get('name');
+  if (savedName) {
+    nameInput.val(savedName);
+  }
+
+  var savedRoom = Cookies.get('roomId');
+  if (savedRoom) {
+    roomInput.val(savedRoom);
+  }
+
+  usernamePage.classList.remove('hidden');
+  usernameForm.addEventListener('submit', connect, true);
+  messageForm.addEventListener('submit', sendMessage, true);
+});
+
+</script>
