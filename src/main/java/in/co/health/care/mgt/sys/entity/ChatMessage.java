@@ -1,62 +1,36 @@
 package in.co.health.care.mgt.sys.entity;
 
-
 public class ChatMessage {
-		
-	private String content;
-	private String sender;
-	private long senderId;
-	private long reciverId;
-	
-	
-	
 
-	public long getSenderId() {
-		return senderId;
-	}
+  public enum MessageType {
+    CHAT, JOIN, LEAVE
+  }
 
-	public void setSenderId(long senderId) {
-		this.senderId = senderId;
-	}
+  private MessageType messageType;
+  private String content;
+  private String sender;
 
-	public long getReciverId() {
-		return reciverId;
-	}
+  public MessageType getType() {
+    return messageType;
+  }
 
-	public void setReciverId(long reciverId) {
-		this.reciverId = reciverId;
-	}
+  public void setType(MessageType messageType) {
+    this.messageType = messageType;
+  }
 
-	private MessageType type;
-	
-	public enum MessageType{
-		CHAT,LEAVE,JOIN
-	}
+  public String getContent() {
+    return content;
+  }
 
-	public String getContent() {
-		return content;
-	}
+  public void setContent(String content) {
+    this.content = content;
+  }
 
-	public void setContent(String content) {
-		this.content = content;
-	}
+  public String getSender() {
+    return sender;
+  }
 
-	public String getSender() {
-		return sender;
-	}
-
-	public void setSender(String sender) {
-		this.sender = sender;
-	}
-
-	public MessageType getType() {
-		return type;
-	}
-
-	public void setType(MessageType type) {
-		this.type = type;
-	}
-	
-	
-	
+  public void setSender(String sender) {
+    this.sender = sender;
+  }
 }
