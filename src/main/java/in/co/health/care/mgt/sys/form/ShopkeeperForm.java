@@ -2,6 +2,8 @@ package in.co.health.care.mgt.sys.form;
 
 import javax.validation.constraints.NotEmpty;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import in.co.health.care.mgt.sys.entity.BaseEntity;
 import in.co.health.care.mgt.sys.entity.ShopkeeperEntity;
 import in.co.health.care.mgt.sys.entity.UserEntity;
@@ -10,7 +12,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ShopKeeperRegistrationForm extends BaseForm {
+public class ShopkeeperForm extends BaseForm {
+
 
 	@NotEmpty(message = "shopName is required")
 	private String shopName;
@@ -30,36 +33,38 @@ public class ShopKeeperRegistrationForm extends BaseForm {
 	private String shopNo;
 	@NotEmpty(message = "ShopCountry is required")
 	private String shopCountry;
+	private MultipartFile profilePic;
+
+	private long sId;
 
 	@Override
 	public BaseEntity getDTO() {
-		ShopkeeperEntity shop = new ShopkeeperEntity();
-		shop.setId(id);
-
-		shop.setContactNo(contactNo);
-		shop.setEducation(education);
-		shop.setShopName(shopName);
-		shop.setShopNo(shopNo);
+		ShopkeeperEntity entity = new ShopkeeperEntity();
 		
-		shop.setLicenceNo(licenceNo);
+		entity.setContactNo(contactNo);
+		entity.setEducation(education);
+		entity.setShopName(shopName);
+		entity.setShopNo(shopNo);
+		entity.setId(sId);
+		entity.setStreet(shopStreet);
+		entity.setShopcity(shopcity);
+		entity.setCountry(shopCountry);
+		entity.setShopAddress(shopAddress);
+		entity.setLicenceNo(licenceNo);
 
-		shop.setStreet(shopStreet);
-		shop.setShopcity(shopcity);
-		shop.setCountry(shopCountry);
-		shop.setShopAddress(shopAddress);
-
-		shop.setCreatedBy(createdBy);
-		shop.setModifiedBy(modifiedBy);
-		shop.setCreatedDatetime(createdDateTime);
-		shop.setModifiedDatetime(modifiedDateTime);
-		return shop;
+		
+		entity.setCreatedBy(createdBy);
+		entity.setModifiedBy(modifiedBy);
+		entity.setCreatedDatetime(createdDateTime);
+		entity.setModifiedDatetime(modifiedDateTime);
+		return entity;
 	}
 
 	@Override
 	public void populate(BaseEntity baseentity) {
 		ShopkeeperEntity entity = (ShopkeeperEntity) baseentity;
-		id = entity.getId();
-
+	
+		sId = entity.getId();
 		contactNo = entity.getContactNo();
 		shopCountry = entity.getCountry();
 		education = entity.getEducation();
@@ -68,7 +73,8 @@ public class ShopKeeperRegistrationForm extends BaseForm {
 		shopName = entity.getShopName();
 		shopNo = entity.getShopNo();
 		shopStreet = entity.getStreet();
-		licenceNo=entity.getLicenceNo();
+		licenceNo = entity.getLicenceNo();
+
 		createdBy = entity.getCreatedBy();
 		modifiedBy = entity.getModifiedBy();
 		createdDateTime = entity.getCreatedDatetime();
