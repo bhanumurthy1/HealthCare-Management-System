@@ -1,6 +1,7 @@
 
 package in.co.health.care.mgt.sys.serviceimpl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -15,9 +16,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import in.co.health.care.mgt.sys.entity.MedicineEntity;
+import in.co.health.care.mgt.sys.entity.NotificationEntity;
 import in.co.health.care.mgt.sys.exception.ApplicationException;
 import in.co.health.care.mgt.sys.exception.DuplicateRecordException;
 import in.co.health.care.mgt.sys.repository.MedicineRepository;
+import in.co.health.care.mgt.sys.repository.NotificationRepository;
 import in.co.health.care.mgt.sys.service.MedicineService;
 
 @Service
@@ -27,6 +30,9 @@ public class MedicineServiceImpl implements MedicineService {
 
 	@Autowired
 	private MedicineRepository repository;
+
+	@Autowired
+	private NotificationRepository notificationRepository;
 
 	@Autowired
 	private EntityManager entityManager;
@@ -163,10 +169,13 @@ public class MedicineServiceImpl implements MedicineService {
 					hql.append("and u.id = " + entity.getId());
 				}
 				if (entity.getName() != null && entity.getName().length() > 0) {
-					hql.append("and u.name like '%" + entity.getName() + "%'");
+					hql.append(" and u.name like '%" + entity.getName() + "%'");
 				}
-
+				if (entity.getShoopkeeperId() > 0) {
+					hql.append(" and u.shoopkeeperId = " + entity.getShoopkeeperId());
+				}
 			}
+			hql.append("and u.active = 1");
 			Query<MedicineEntity> query = session.createQuery(hql.toString(), MedicineEntity.class);
 			if (pageNo > 0) {
 				pageNo = (pageNo - 1) * pageSize;
@@ -175,10 +184,36 @@ public class MedicineServiceImpl implements MedicineService {
 			}
 			list = query.getResultList();
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new ApplicationException("Exaception getting in MedicineServiceImpl search() : " + e.getMessage());
 		}
 		log.info("MedicineServiceImpl search method end");
 		return list;
+	}
+
+	@Override
+	public void expireyDateSchedulor() throws ApplicationException {
+		log.info("MedicineServiceImpl expireyDateSchedulor method start");
+		try {
+			List<MedicineEntity> expiryDateRecord = repository.getExpiryDateRecord();
+			if (expiryDateRecord.size() > 0) {
+				for (MedicineEntity medicineEntity : expiryDateRecord) {
+					medicineEntity.setActive(false);
+					repository.saveAndFlush(medicineEntity);
+
+					NotificationEntity entity = new NotificationEntity();
+					entity.setNotification(
+							medicineEntity.getName() + " is expired at " + medicineEntity.getExpiryDate());
+					entity.setDate(new Date());
+					entity.setUserId(medicineEntity.getShoopkeeperId());
+					notificationRepository.save(entity);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new ApplicationException("Exaception getting in expireyDateSchedulor search() : " + e.getMessage());
+		}
+		log.info("MedicineServiceImpl expireyDateSchedulor method End");
 	}
 
 }
