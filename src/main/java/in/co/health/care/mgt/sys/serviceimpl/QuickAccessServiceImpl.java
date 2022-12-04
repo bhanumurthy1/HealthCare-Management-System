@@ -175,7 +175,11 @@ public class QuickAccessServiceImpl implements QuickAccessService {
 					hql.append("and u.id = " + entity.getId());
 				}
 				if (entity.getKey() != null && entity.getKey().length() > 0) {
-					hql.append("and u.key like '%" + entity.getKey().trim() + "%'");
+					hql.append("and u.key like '%" + entity.getKey() + "%'");
+				}
+				
+				if (entity.getFromScale() > 0) {
+					hql.append("and "+entity.getFromScale()+" between to_scale and from_scale");
 				}
 
 			}

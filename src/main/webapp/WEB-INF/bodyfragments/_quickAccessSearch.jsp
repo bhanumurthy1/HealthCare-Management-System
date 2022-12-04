@@ -14,59 +14,26 @@
 <div class="container">
 	<nav aria-label="breadcrumb">
 		<ol class="breadcrumb">
-			<li class="breadcrumb-item linkSize"><i
+			<li class="breadcrumb-item linkSize text-indigo-800"><i
 				class="fas fa-tachometer-alt"></i> <a class="link-dark"
 				href="<c:url value="/welcome"/>">Home</a></li>
-			<li class="breadcrumb-item linkSize active" aria-current="page">
-				<i class="fa fa-arrow-right" aria-hidden="true"></i> Quick Access
+			<li class="breadcrumb-item text-indigo-800 linkSize active" aria-current="page">
+				<i class="fa fa-arrow-right text-indigo-800" aria-hidden="true">Quick Access</i> 
 			</li>
 		</ol>
 	</nav>
 </div>
-<hr>
+<hr class=" text-indigo-800">
 <div class="container">
-	<div class="card shadow  mb-5 bg-body rounded" >
-		<h5 class="card-header"
-			style="background-color: rgb(13 110 253/ 25%); color: black;">Search Here</h5>
-		<b><%@ include file="businessMessage.jsp"%></b>
-		<div class="card-body">
-			<sf:form role="form"
-				action="${pageContext.request.contextPath}/quickAccess/search"
-				method="post" modelAttribute="form">
-
-				<div class="mb-3">
-					<div class=row>
-						<div class="col-8">
-							<s:bind path="key">
-								<sf:input  path="${status.expression}"
-									placeholder="Enter Search here..." class="form-control" />
-								<div class="form-text">
-									<font color="red" style="font-size: 13px"><sf:errors
-											path="${status.expression}" /></font>
-								</div>
-							</s:bind>
-						</div>
-
-						<div class="col-4">
-							<input type="submit" name="operation"
-								class="btn btn-outline-info" value="Search">
-						</div>
-					</div>
-				</div>
-			</sf:form>
-		</div>
-	</div>
-</div>
-
-<c:if test="${list != null}">
+	
 
 <sf:form method="post"
 	action="${pageContext.request.contextPath}/quickAccess/search"
 	modelAttribute="form">
-	<div class="card">
-		<h5 class="card-header"
-			style="background-color: #00061df7; color: white;">Suggestions</h5>
-		<div class="card-body">
+	<div class="card rounded-3xl shadow-xl w-full overflow-hidden mt-10">
+		<h5 class="card-header p-3 "
+			style="background-color: #262673; color: white; font-style: oblique;">Suggestions</h5>
+<div class="card-body bg-indigo-100">
 			<%-- <div class="row g-3">
 
 				<s:bind path="firstName">
@@ -102,9 +69,9 @@
 			<sf:input type="hidden" path="total" />
 			<sf:input type="hidden" path="pagenosize" />
 
-			<table class="table table-bordered border-primary">
+			<table class="table p-5 border-collapse border border-slate-400 bg-gray-100 text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden">
 				<thead>
-					<tr>
+					<tr class="text-center border border-slate-300 p-3 bg-indigo-500 font-semibold text-white">
 						<%-- <c:if test="${sessionScope.user.role.id == 1}">
 							<th scope="col"><input type="checkbox" id="selectall">Select
 								All</th>
@@ -117,7 +84,7 @@
 				</thead>
 				<tbody>
 					<c:forEach items="${list}" var="ac" varStatus="quickAccess">
-						<tr>
+						<tr class="border border-slate-300 text-center">
 							<%-- <c:if test="${sessionScope.user.role.id == 1}">
 								<td><input type="checkbox" class="case" name="ids"
 									value="${em.id}"></td>
@@ -174,5 +141,5 @@
 
 	</div>
 </sf:form>
-</c:if>
+</div>
 
