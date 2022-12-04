@@ -1,14 +1,19 @@
 package in.co.health.care.mgt.sys.ctl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -34,6 +39,7 @@ import in.co.health.care.mgt.sys.service.ScheduleSlotService;
 import in.co.health.care.mgt.sys.service.UserService;
 import in.co.health.care.mgt.sys.util.ControllerUtility;
 import in.co.health.care.mgt.sys.util.DataUtility;
+import in.co.health.care.mgt.sys.util.EmailBuilder;
 
 @Controller
 @RequestMapping("/appointment")
@@ -49,6 +55,9 @@ public class AppointmentCtl extends BaseCtl {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private JavaMailSender javaMailSender;
 	
 	@ModelAttribute
 	public void preload(Model model) {
@@ -121,6 +130,21 @@ public class AppointmentCtl extends BaseCtl {
 					AppointmentEntity findById = service.findById(aId);
 					findById.setPrescription(form.getPrescription());
 					service.update(findById);
+					
+					HashMap<String, String> map = new HashMap<String, String>();
+					map.put("prescription", findById.getPrescription());
+					String message = EmailBuilder.getUpdatePrecription(map);
+					MimeMessage msg = javaMailSender.createMimeMessage();
+					try {
+						MimeMessageHelper helper = new MimeMessageHelper(msg);
+						helper.setTo(userService.findById(findById.getPatientId()).getEmailId());
+						helper.setSubject("Health Care Managment  Update Prescription Successfully!!!");
+						helper.setText(message, true);
+						javaMailSender.send(msg);
+					} catch (MessagingException e) {
+						e.printStackTrace();
+					}
+					
 					ControllerUtility.setSuccessMessage("Prescription Added Successfully", model);
 				return "updatePrescription";
 			}
@@ -153,6 +177,7 @@ public class AppointmentCtl extends BaseCtl {
 					service.update(bean);
 					ControllerUtility.setSuccessMessage("Appointment update Successfully!!!!", model);
 				} else {
+					bean.setChatRoom("/"+bean.getDoctorName().substring(0, 2)+bean.getPatientName().substring(0, 2));
 					service.add(bean);
 					ControllerUtility.setSuccessMessage("Appointment Added Successfully!!!!", model);
 				}
@@ -209,6 +234,12 @@ public class AppointmentCtl extends BaseCtl {
 			AppointmentEntity dto = (AppointmentEntity) form.getDTO();
 
 			UserEntity uDto = (UserEntity) session.getAttribute("user");
+			
+			if(uDto.getRole().getId()==2) {
+				dto.setDoctorId(uDto.getId());
+			}else if(uDto.getRole().getId()==4) {
+				dto.setPatientId(uDto.getId());
+			}
 
 			List<AppointmentEntity> list;
 
@@ -256,5 +287,3 @@ public class AppointmentCtl extends BaseCtl {
 	 */
 
 }
-
-
