@@ -14,22 +14,22 @@
 <div class="container">
 	<nav aria-label="breadcrumb">
 		<ol class="breadcrumb">
-			<li class="breadcrumb-item linkSize"><i
+			<li class="breadcrumb-item linkSize  text-indigo-800"><i
 				class="fas fa-tachometer-alt"></i> <a class="link-dark"
 				href="<c:url value="/welcome"/>">Home</a></li>
-			<li class="breadcrumb-item linkSize active" aria-current="page">
-				<i class="fa fa-arrow-right" aria-hidden="true"></i> Schedule
-				Appointment
+			<li class="breadcrumb-item text-indigo-800 linkSize active" aria-current="page">
+				<i class="fa fa-arrow-right text-indigo-800" aria-hidden="true">Schedule
+				Appointment</i> 
 			</li>
 		</ol>
 	</nav>
 </div>
-<hr>
+<hr class=" text-indigo-800">
 <div class="container">
-	<div class="card shadow  mb-5 bg-body rounded" >
-		<h5 class="card-header"
-			style="background-color: rgb(13 110 253/ 25%); color: black;">Select
-			Category</h5>
+			<div class="card rounded-3xl shadow-xl w-full overflow-hidden mt-10">
+				<h5 class="card-header p-3 "
+					style="background-color: #262673; color: white; font-style: oblique;">SELECT CATEGORY</h5>
+		<div class="card-body bg-indigo-100">
 		<b><%@ include file="businessMessage.jsp"%></b>
 		<div class="card-body">
 			<sf:form role="form"
@@ -40,7 +40,7 @@
 					<div class=row>
 						<div class="col-8">
 							<s:bind path="specialization">
-								<sf:select class="form-control" path="${status.expression}">
+								<sf:select class="block px-2.5 pb-2.5 pt-2 w-full text-sm text-gray-900 bg-transparent rounded-lg border-2 border-gray-300 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" path="${status.expression}">
 									<sf:option value="" label="Select" />
 									<sf:options items="${docSpecial}" />
 								</sf:select>
@@ -52,15 +52,21 @@
 						</div>
 
 						<div class="col-4">
-							<input type="submit" name="operation"
-								class="btn btn-outline-info" value="Search">
+
+								<button type="submit" value="Search" class="flex items-center block bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-2 py-2 font-semibold"
+							name="operation" >
+							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+								<path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+							  </svg>
+							<span>&nbsp;SEARCH</span>
+
+						</button>
 						</div>
 					</div>
 				</div>
 			</sf:form>
 		</div>
-	</div>
-</div>
+	
 
 <c:if test="${list != null}">
 
@@ -69,7 +75,7 @@
 	modelAttribute="form">
 	<div class="card">
 		<h5 class="card-header"
-			style="background-color: #00061df7; color: white;">Doctor List</h5>
+			style="background-color: #2626B7; color: rgb(255, 255, 255); font-style: oblique;">Doctor List</h5>
 		<div class="card-body">
 			<%-- <div class="row g-3">
 
@@ -106,9 +112,9 @@
 			<sf:input type="hidden" path="total" />
 			<sf:input type="hidden" path="pagenosize" />
 
-			<table class="table table-bordered border-primary">
+			<table class="table p-5 border-collapse border border-slate-400 bg-gray-100 text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden">
 				<thead>
-					<tr>
+					<tr class="text-center border border-slate-300 p-3 bg-indigo-400 font-semibold text-white">
 						<%-- <c:if test="${sessionScope.user.role.id == 1}">
 							<th scope="col"><input type="checkbox" id="selectall">Select
 								All</th>
@@ -127,7 +133,7 @@
 				</thead>
 				<tbody>
 					<c:forEach items="${list}" var="doc" varStatus="doctor">
-						<tr>
+						<tr class="border border-slate-300 text-center">
 							<%-- <c:if test="${sessionScope.user.role.id == 1}">
 								<td><input type="checkbox" class="case" name="ids"
 									value="${em.id}"></td>
@@ -138,7 +144,7 @@
 							<td scope="row">${doc.phoneNo}</td>
 							<td scope="row">${doc.doctor.specialization}</td>
 							<td scope="row">${doc.doctor.pastExprience}</td>
-							<td scope="row"><a class="btn btn-primary btn-sm" href="${slotUrl} ${doc.id}" ><i class="fas fa-eye"></i></a></td>
+							<td scope="row"><a class="btn btn-outline-info" href="${slotUrl} ${doc.id}" ><i class="fas fa-eye"></i></a></td>
 						<%-- 	<c:if test="${sessionScope.user.role.id == 1}">
 								
 								<td>
@@ -191,4 +197,7 @@
 	</div>
 </sf:form>
 </c:if>
+</div>
+</div><br>
+</div>
 

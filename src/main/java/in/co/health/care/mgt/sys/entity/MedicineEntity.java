@@ -24,6 +24,12 @@ public class MedicineEntity extends BaseEntity {
 	@Column(name="quantity",columnDefinition = "INT default 0")
 	private int quantity;
 	
+	@Column(name="Rating")
+	private int rating;
+	
+	@Column(name="Price")
+	private double price;
+	
 	@Column(name="Manufature_Date")
 	private Date manufactureDate;
 	@Column(name="Expiry_Date")
