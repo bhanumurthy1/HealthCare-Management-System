@@ -193,7 +193,13 @@ public class UserServiceImpl implements UserService {
 				if (entity.getLastName() != null && entity.getLastName().length() > 0) {
 					hql.append("and u.lastName like '%" + entity.getLastName() + "%'");
 				}
+
+				if (entity.getRoleId() > 0) {
+					hql.append("and u.role =" + entity.getRoleId());
+				}
 			}
+
+			hql.append(" and u.role not in (1) order by id desc");
 			Query<UserEntity> query = session.createQuery(hql.toString(), UserEntity.class);
 			if (pageNo > 0) {
 				pageNo = (pageNo - 1) * pageSize;
@@ -256,22 +262,27 @@ public class UserServiceImpl implements UserService {
 
 			if (entityExist != null) {
 
-				/*
-				 * HashMap<String, String> map = new HashMap<String, String>();
-				 * map.put("firstName", entityExist.getFirstName()); map.put("lastName",
-				 * entityExist.getLastName()); map.put("login", entityExist.getUserName());
-				 * map.put("password", entityExist.getPassword());
-				 * 
-				 * String message = EmailBuilder.getForgetPasswordMessage(map);
-				 * 
-				 * MimeMessage msg = mailSender.createMimeMessage();
-				 * 
-				 * try { MimeMessageHelper helper = new MimeMessageHelper(msg);
-				 * helper.setTo(entityExist.getEmailId());
-				 * helper.setSubject("Health Care Forget Password Forget Password ");
-				 * helper.setText(message, true); mailSender.send(msg); } catch
-				 * (MessagingException e) { e.printStackTrace(); return false; }
-				 */
+				HashMap<String, String> map = new HashMap<String, String>();
+				map.put("firstName", entityExist.getFirstName());
+				map.put("lastName", entityExist.getLastName());
+				map.put("login", entityExist.getUserName());
+				map.put("password", entityExist.getPassword());
+
+				String message = EmailBuilder.getForgetPasswordMessage(map);
+
+				MimeMessage msg = javaMailSender.createMimeMessage();
+
+				try {
+					MimeMessageHelper helper = new MimeMessageHelper(msg);
+					helper.setTo(entityExist.getEmailId());
+					helper.setSubject("Health Care Forget Password");
+					//helper.setText(message, true);
+					helper.setText(message, true);
+					javaMailSender.send(msg);
+				} catch (MessagingException e) {
+					e.printStackTrace();
+					return false;
+				}
 
 			} else {
 				pass = false;
@@ -289,7 +300,7 @@ public class UserServiceImpl implements UserService {
 	public long register(UserEntity entity) throws DuplicateRecordException, ApplicationException {
 		long pk = add(entity);
 
-		/*HashMap<String, String> map = new HashMap<String, String>();
+		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("firstName", entity.getFirstName());
 		map.put("lastName", entity.getLastName());
 		map.put("login", entity.getUserName());
@@ -304,7 +315,7 @@ public class UserServiceImpl implements UserService {
 			javaMailSender.send(msg);
 		} catch (MessagingException e) {
 			e.printStackTrace();
-		}*/
+		}
 
 		return pk;
 	}

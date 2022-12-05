@@ -7,4 +7,6 @@ import in.co.health.care.mgt.sys.entity.ShopkeeperEntity;
 
 public interface ShopkeeperRepository extends JpaRepository<ShopkeeperEntity, Long>{
 
+	public ShopkeeperEntity findByShopName(String shopName);
+	
 }
